@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     public bool timer = false;
     float time;
 
+    int round = 0;
     //----------------------------------------
     public static GameManager instance = null;
 
@@ -42,6 +43,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         GameManager_Init();
+        Set_Dictionry_List();
 
         enermy.Enermy_Init();
         panelControl.PanelControl_Init();
@@ -53,6 +55,7 @@ public class GameManager : MonoBehaviour
         {
             time += Time.deltaTime;
             Timer(time);
+            SetRound((int)time);
         }
     }
 
@@ -69,8 +72,7 @@ public class GameManager : MonoBehaviour
             enermy.Clear_Enermy();
             timer = true;
             time = 0;
-            enermy.Spawn_Enermy();
-            //character.Find_Target();
+            round = 0;
         });
     }
 
@@ -89,31 +91,66 @@ public class GameManager : MonoBehaviour
 
     public void SetEnermyCount()
     {
-        if(list_Obj_spawnEnermy.Count == enermy_Max_Count)
+        if (list_Obj_spawnEnermy.Count == enermy_Max_Count)
         {
             timer = false;
             txt_EnermyCount.SetText("( " + list_Obj_spawnEnermy.Count + " / " + enermy_Max_Count + " )");
             txt_EnermyCount.color = Color.red;
         }
-        else if(list_Obj_spawnEnermy.Count > list_Obj_spawnEnermy.Count* 0.6f) // 60 ÆÛ
+        else if (list_Obj_spawnEnermy.Count > enermy_Max_Count * 0.6f) // 60 ÆÛ
         {
             txt_EnermyCount.SetText("( " + list_Obj_spawnEnermy.Count + " / " + enermy_Max_Count + " )");
             txt_EnermyCount.color = Color.yellow;
         }
-        txt_EnermyCount.SetText("( " + list_Obj_spawnEnermy.Count + " / " + enermy_Max_Count + " )");
+        else
+        {
+            txt_EnermyCount.SetText("( " + list_Obj_spawnEnermy.Count + " / " + enermy_Max_Count + " )");
+            txt_EnermyCount.color = Color.black;
+        }
     }
 
-    void SetRound()
+    void SetRound(int time)
     {
-
+        switch (time)
+        {
+            case 10: //10Sec
+                if(round == 0)
+                {
+                    Coroutine(Round_Spawn_Enermy());
+                }
+                break;
+            case 60: // 1ºÐ
+                if(round == 1)
+                {
+                    Coroutine(Round_Spawn_Enermy());
+                }
+                break;
+            case 300: // 5min
+                if(round == 2)
+                {
+                    Coroutine(Round_Spawn_Enermy());
+                }
+                break;
+        }
     }
 
     IEnumerator Round_Spawn_Enermy()
     {
-        while (true)
+        round++;
+        for (int i=0; i < list_Round_Spawn[round][1]; i++)
         {
-
+            enermy.Spawn_Enermy(list_Round_Spawn[round][0]);
             yield return new WaitForSeconds(2f);
         }
+        yield break;
+    }
+
+
+
+
+    void Set_Dictionry_List()
+    {
+        // prefabNum, Count
+        list_Round_Spawn.Add(1, new List<int> { 0, 10 });
     }
 }

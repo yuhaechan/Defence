@@ -1614,7 +1614,8 @@ MonoBehaviour:
   - {fileID: 1598724371}
   - {fileID: 1754517576}
   spawn_ParentTransform: {fileID: 1189776499}
-  prefab_SpawnEnermy: {fileID: 95495770430540848, guid: a689ba8677cb89245ae04b39f40eb0ad, type: 3}
+  prefab_SpawnEnermy:
+  - {fileID: 95495770430540848, guid: a689ba8677cb89245ae04b39f40eb0ad, type: 3}
 --- !u!1 &613977443
 GameObject:
   m_ObjectHideFlags: 0
