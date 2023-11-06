@@ -89,5 +89,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ef4c90f80c07d646b95c45d1ca62624, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  me: {fileID: 5901493627249802921}
   list_Obj_Target: []
   obj_findObject: []
+  obj_Target: {fileID: 0}
+  ammorList: []
+  arrmorPrefab: {fileID: 5876619238609416957, guid: 924a48b47d96f35469ab3824d8550d30, type: 3}

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] public Transform[] rect_TP_Poz; //TP - Turning Point
     [SerializeField] Enermy enermy;
     [SerializeField] PanelControl panelControl;
 
