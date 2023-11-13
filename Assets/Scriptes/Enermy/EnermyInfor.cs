@@ -5,8 +5,9 @@ using static UnityEngine.GraphicsBuffer;
 
 public class EnermyInfor : MonoBehaviour
 {
-    float hp = 10f;
-    float speed = 5.0f;
+    public int i;
+    float hp;
+    float speed = 3.0f;
     Transform transform_Target;
     public bool isTarget = true;
     int listnum;
@@ -14,6 +15,7 @@ public class EnermyInfor : MonoBehaviour
 
     private void Start()
     {
+        hp = 5f;
         for(int i=0; i< GameManager.instance.list_Obj_spawnEnermy.Count; i++)
         {
             if (this.gameObject == GameManager.instance.list_Obj_spawnEnermy[i])
@@ -65,28 +67,41 @@ public class EnermyInfor : MonoBehaviour
         }
     }
     */
-    public void SetHP(float damage, GameObject obj)
+    public void SetHP(float damage)
     {
-        list_ammors.Add(obj);
-        
-        if((hp = hp - damage) < 0)
+        int num = this.i;
+        hp = hp - damage;
+        if ((hp = hp - damage) < 0)
         {
-            hp = hp - damage;
             //Å¸°Ù ÇØÁ¦
-            isTarget = false;
-            GameManager.instance.list_Obj_spawnEnermy.Remove(GameManager.instance.list_Obj_spawnEnermy[listnum]);
-            try
+            if(!isTarget)
             {
-                Debug.Log(list_ammors.Count);
-                //Destroy(this.gameObject);
-                GameManager.instance.list_Obj_spawnEnermy.Remove(this.gameObject);
+                StartCoroutine(WaitDuringMisaile());
+                GameManager.instance.list_Obj_spawnEnermy.RemoveAt(num);
+                Destroy(this.gameObject);
             }
-            catch
+            else
             {
-
+                if(list_ammors.Count<=0)
+                {
+                    Destroy(this.gameObject);
+                    isTarget = false;
+                }
             }
         }
         
+    }
+    public bool CheckHP()
+    {
+        return hp > 0;
+    }
+
+    IEnumerator WaitDuringMisaile()
+    {
+        while(true)
+        {
+            yield return null;
+        }
     }
 }
 

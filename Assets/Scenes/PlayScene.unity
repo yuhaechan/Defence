@@ -709,6 +709,7 @@ MonoBehaviour:
   - {fileID: 1266113784}
   - {fileID: 1424544806}
   - {fileID: 46794977}
+  list_SpawnCharaters: []
   btn_Spawns:
   - {fileID: 1099905596}
 --- !u!114 &282998102
@@ -900,6 +901,7 @@ MonoBehaviour:
   - {fileID: 1754517576}
   enermy: {fileID: 593454302}
   panelControl: {fileID: 2134847133}
+  spawnPanel: {fileID: 282998101}
   txt_Timer: {fileID: 1391346059}
   btn_Restart: {fileID: 13865945}
   txt_EnermyCount: {fileID: 476214284}

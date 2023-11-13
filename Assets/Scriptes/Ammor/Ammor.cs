@@ -6,7 +6,7 @@ public class Ammor : MonoBehaviour
 {
     bool attack = true;
     public GameObject target;
-    float speed = 5f;
+    float speed = 8f;
     public float damage;
 
 
@@ -31,11 +31,19 @@ public class Ammor : MonoBehaviour
     {
         if (other.gameObject.tag == "Enermy" && other.gameObject == target)
         {
+            EnermyInfor enermyInfor = other.gameObject.GetComponent<EnermyInfor>();
+            enermyInfor.list_ammors.Add(this.gameObject);
             attack = false;
-            Destroy(this.gameObject);
 
-            //EnermyInfor enermyInfor = other.gameObject.GetComponent<EnermyInfor>();
-            //enermyInfor.SetHP(damage);
+            if (!enermyInfor.isTarget && !enermyInfor.CheckHP())
+            {
+                enermyInfor.list_ammors.RemoveAll(ammor => ammor.gameObject);
+            }
+            else
+            {
+                enermyInfor.list_ammors.RemoveAt(0);
+            }
+            Destroy(this.gameObject);
         }
     }
 }

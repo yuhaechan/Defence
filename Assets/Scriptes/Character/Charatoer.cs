@@ -16,10 +16,10 @@ public class Charatoer : MonoBehaviour
     //공격대상 찾기 -> 있다면 전부 찾기 -> 전부찾은다음 제일 먼저 찾은것 or 가까운것 -> 사라지면 리스트 제일 마지막 것을 타깃으로
 
     //공격 범위
-    bool attack = false;
+    [SerializeField] bool attack = false;
     float killingrange = 3f;
-    float attackDamage = 1.5f;
-    float attackSpeed = 1f; 
+    float attackDamage = 3.5f;
+    float attackSpeed = 2f; 
 
     void Start()
     {
@@ -64,14 +64,23 @@ public class Charatoer : MonoBehaviour
     {
         list_Obj_Target.Clear();
         GameObject[] obj_findObjects = GameManager.instance.list_Obj_spawnEnermy.ToArray();
-
-        foreach (GameObject obj_findObject in obj_findObjects)
+        try
         {
-            Vector3 distance = transform.position - obj_findObject.transform.position;
-            if (Mathf.Abs(distance.x) < killingrange && Mathf.Abs(distance.y) < killingrange)
+            foreach (GameObject obj_findObject in obj_findObjects)
             {
-                obj_Target = obj_findObject.gameObject;
-                break;
+                Vector3 distance = transform.position - obj_findObject.transform.position;
+                if (Mathf.Abs(distance.x) < killingrange && Mathf.Abs(distance.y) < killingrange)
+                {
+                    obj_Target = obj_findObject.gameObject;
+                    break;
+                }
+            }
+        }
+        catch 
+        {
+            if (obj_Target == null)
+            {
+                Find_Target();
             }
         }
     }
@@ -83,12 +92,12 @@ public class Charatoer : MonoBehaviour
         {
             try
             {
-                EnermyInfor enermyinfor = obj_Target.GetComponent<EnermyInfor>();
+                EnermyInfor enermyinfor = target.GetComponent<EnermyInfor>();
                 if (enermyinfor.isTarget)
                 {
+                    enermyinfor.CheckHP();
                     GameObject obj_Ammor = Instantiate(arrmorPrefab, new Vector3(0, 0, 0), Quaternion.identity, this.gameObject.transform);
-                    enermyinfor.SetHP(attackDamage, obj_Ammor);
-                    enermyinfor.list_ammors.Add(obj_Ammor);
+                    enermyinfor.SetHP(attackDamage);
                     obj_Ammor.transform.position = transform.position;
                     Ammor ammor = obj_Ammor.GetComponent<Ammor>();
                     ammor.target = target;

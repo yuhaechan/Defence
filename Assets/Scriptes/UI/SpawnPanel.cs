@@ -1,15 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 public class SpawnPanel : MonoBehaviour
 {
     [SerializeField] GameObject Popup;
-
     [SerializeField] List<GameObject> list_Prefab_SpawnCharaters = new List<GameObject>(); // 소환할수있는 캐릭터
     [SerializeField] Transform spawn_ParentTransform;
     [SerializeField] Transform[] transform_SpawnPoz;
+    [SerializeField] List<GameObject> list_SpawnCharaters = new List<GameObject>();
 
 
     [SerializeField] Button[] btn_Spawns;
@@ -17,6 +18,7 @@ public class SpawnPanel : MonoBehaviour
     public void SpawnPanel_Init()
     {
         SpawnPanel_Btn_Init();
+        Clear_Character();
     }
 
     void SpawnPanel_Btn_Init()
@@ -35,6 +37,15 @@ public class SpawnPanel : MonoBehaviour
                 }
             });
         }
+    }
+
+    public void Clear_Character()
+    {
+        for (int i = 0; i < GameManager.instance.list_Obj_SpawnCharaters.Count; i++)
+        {
+            Destroy(GameManager.instance.list_Obj_SpawnCharaters[i].gameObject);
+        }
+        GameManager.instance.list_Obj_SpawnCharaters.RemoveAll(charter => charter.gameObject);
     }
 
     void Spawn_Charater()

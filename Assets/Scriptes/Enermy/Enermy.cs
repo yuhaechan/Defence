@@ -23,8 +23,8 @@ public class Enermy : MonoBehaviour
         for (int i = 0; i < GameManager.instance.list_Obj_spawnEnermy.Count; i++)
         {
             Destroy(GameManager.instance.list_Obj_spawnEnermy[i].gameObject);
-            GameManager.instance.list_Obj_spawnEnermy.Remove(GameManager.instance.list_Obj_spawnEnermy[i]);
         }
+        GameManager.instance.list_Obj_spawnEnermy.RemoveAll(enermy => enermy.gameObject);
     }
     /*
     public void Spawn_Enermy()

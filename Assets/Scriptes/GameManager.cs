@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -9,6 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] public Transform[] rect_TP_Poz; //TP - Turning Point
     [SerializeField] Enermy enermy;
     [SerializeField] PanelControl panelControl;
+    [SerializeField] SpawnPanel spawnPanel;
 
     [SerializeField] TextMeshProUGUI txt_Timer;
     [SerializeField] Button btn_Restart;
@@ -45,7 +47,6 @@ public class GameManager : MonoBehaviour
     {
         GameManager_Init();
         Set_Dictionry_List();
-
         enermy.Enermy_Init();
         panelControl.PanelControl_Init();
     }
@@ -70,7 +71,11 @@ public class GameManager : MonoBehaviour
         btn_Restart.onClick.RemoveAllListeners();
 
         btn_Restart.onClick.AddListener(() => {
-            enermy.Clear_Enermy();
+            if(list_Obj_SpawnCharaters.Count > 0 || list_Obj_spawnEnermy.Count > 0)
+            {
+                spawnPanel.Clear_Character();
+                enermy.Clear_Enermy();
+            }
             timer = true;
             time = 0;
             round = 0;
