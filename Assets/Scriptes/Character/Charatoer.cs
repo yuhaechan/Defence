@@ -10,7 +10,6 @@ public class Charatoer : MonoBehaviour
     [SerializeField] List<GameObject> list_Obj_Target = new List<GameObject>();
     [SerializeField] GameObject[] obj_findObject;
     [SerializeField] GameObject obj_Target;
-    [SerializeField] List<GameObject> ammorList = new List<GameObject>();
     [SerializeField] GameObject arrmorPrefab;
 
     //공격대상 찾기 -> 없으면 다시 찾기
@@ -19,8 +18,8 @@ public class Charatoer : MonoBehaviour
     //공격 범위
     bool attack = false;
     float killingrange = 3f;
-    float attackDamage = 1f;
-    float attackSpeed = 3f; 
+    float attackDamage = 1.5f;
+    float attackSpeed = 1f; 
 
     void Start()
     {
@@ -80,15 +79,36 @@ public class Charatoer : MonoBehaviour
     IEnumerator Attack(GameObject target)
     {
         attack = true;
-        ammorList.Clear();
         while (true)
         {
-            GameObject obj_Ammor = Instantiate(arrmorPrefab, new Vector3(0, 0, 0), Quaternion.identity, this.gameObject.transform);
-            obj_Ammor.transform.position = transform.position;
-            ammorList.Add(obj_Ammor);
-            Ammor ammor = obj_Ammor.GetComponent<Ammor>();
-            ammor.target = target;
-            ammor.GotoTarget();
+            try
+            {
+                EnermyInfor enermyinfor = obj_Target.GetComponent<EnermyInfor>();
+                if (enermyinfor.isTarget)
+                {
+                    GameObject obj_Ammor = Instantiate(arrmorPrefab, new Vector3(0, 0, 0), Quaternion.identity, this.gameObject.transform);
+                    enermyinfor.SetHP(attackDamage, obj_Ammor);
+                    enermyinfor.list_ammors.Add(obj_Ammor);
+                    obj_Ammor.transform.position = transform.position;
+                    Ammor ammor = obj_Ammor.GetComponent<Ammor>();
+                    ammor.target = target;
+                    ammor.damage = attackDamage;
+                    ammor.GotoTarget();
+                }
+                else
+                {
+                    Find_Target();
+                }
+                
+            }
+            catch
+            {
+                if(obj_Target == null)
+                {
+                    Find_Target();
+                }
+            }
+
             yield return new WaitForSeconds(attackSpeed);
         }
     }

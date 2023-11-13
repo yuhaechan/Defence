@@ -7,6 +7,7 @@ public class Ammor : MonoBehaviour
     bool attack = true;
     public GameObject target;
     float speed = 5f;
+    public float damage;
 
 
     public void GotoTarget()
@@ -28,11 +29,13 @@ public class Ammor : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Enermy")
+        if (other.gameObject.tag == "Enermy" && other.gameObject == target)
         {
-            Debug.Log("Collided with an object with the tag 'YourTag'");
             attack = false;
             Destroy(this.gameObject);
+
+            //EnermyInfor enermyInfor = other.gameObject.GetComponent<EnermyInfor>();
+            //enermyInfor.SetHP(damage);
         }
     }
 }

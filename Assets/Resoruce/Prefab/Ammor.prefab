@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: -4643719553928421157}
   - component: {fileID: 8357568466939662465}
   - component: {fileID: -3722508539753854896}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Ammor
-  m_TagString: Untagged
+  m_TagString: Ammor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -92,6 +92,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  damage: 0
 --- !u!50 &8357568466939662465
 Rigidbody2D:
   serializedVersion: 4

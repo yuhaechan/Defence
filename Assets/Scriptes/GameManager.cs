@@ -74,6 +74,7 @@ public class GameManager : MonoBehaviour
             timer = true;
             time = 0;
             round = 0;
+            txt_EnermyCount.SetText("10초에 게임이 시작됩니다.");
         });
     }
 
